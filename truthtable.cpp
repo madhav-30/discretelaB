@@ -1,7 +1,7 @@
-include<stdio.h>
+#include<stdio.h>
 
 
-void main()
+int main()
 {
  int a[2][2],b[2][2],c[2];
  int i,j;
@@ -43,4 +43,5 @@ for(i=0;i<=1;i++)
  {
    printf("   %d   :  %d\n",i,c[i]);
  }
+ return 0;
 }
