@@ -1,51 +1,39 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define V 5
-int minKey(int key[], bool mstSet[])
-{
-	int min = INT_MAX, min_index;
-
-	for (int v = 0; v < V; v++)
-		if (mstSet[v] == false && key[v] < min)
-			min = key[v], min_index = v;
-
-	return min_index;
-}
-void printMST(int parent[], int graph[V][V])
-{
-	cout << "Edge \tWeight\n";
-	for (int i = 1; i < V; i++)
-		cout << parent[i] << " - " << i << " \t"
-			<< graph[i][parent[i]] << " \n";
-}
-void primMST(int graph[V][V])
-{
-	int parent[V];
-	int key[V];
-	bool mstSet[V];
-	for (int i = 0; i < V; i++)
-		key[i] = INT_MAX, mstSet[i] = false;
-	key[0] = 0;
-	parent[0] = -1; 
-	for (int count = 0; count < V - 1; count++) {
-		int u = minKey(key, mstSet);
-		mstSet[u] = true;
-		for (int v = 0; v < V; v++)
-			if (graph[u][v] && mstSet[v] == false
-				&& graph[u][v] < key[v])
-				parent[v] = u, key[v] = graph[u][v];
-	}
-	printMST(parent, graph);
-}
-int main()
-{
-	int graph[V][V] = { { 0, 2, 0, 6, 0 },
-						{ 2, 0, 3, 8, 5 },
-						{ 0, 3, 0, 0, 7 },
-						{ 6, 8, 0, 0, 9 },
-						{ 0, 5, 7, 9, 0 } };
-
-	primMST(graph);
-
-	return 0;
-}
+    #include<stdio.h>
+    #include<conio.h>
+    int a,b,u,v,n,i,j,ne=1;
+    int visited[10]= {
+    	0
+    }
+    ,min,mincost=0,cost[10][10];
+    void main() {
+    	clrscr();
+    	printf("\n Enter the number of nodes:");
+    	scanf("%d",&n);
+    	printf("\n Enter the adjacency matrix:\n");
+    	for (i=1;i<=n;i++)
+    	  for (j=1;j<=n;j++) {
+    		scanf("%d",&cost[i][j]);
+    		if(cost[i][j]==0)
+    		    cost[i][j]=999;
+    	}
+    	visited[1]=1;
+    	printf("\n");
+    	while(ne<n) {
+    		for (i=1,min=999;i<=n;i++)
+    		   for (j=1;j<=n;j++)
+    		    if(cost[i][j]<min)
+    		     if(visited[i]!=0) {
+    			min=cost[i][j];
+    			a=u=i;
+    			b=v=j;
+    		}
+    		if(visited[u]==0 || visited[v]==0) {
+    			printf("\n Edge %d:(%d %d) cost:%d",ne++,a,b,min);
+    			mincost+=min;
+    			visited[b]=1;
+    		}
+    		cost[a][b]=cost[b][a]=999;
+    	}
+    	printf("\n Minimun cost=%d",mincost);
+    	getch();
+    }
